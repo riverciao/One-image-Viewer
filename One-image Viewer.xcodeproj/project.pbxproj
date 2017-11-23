@@ -12,6 +12,7 @@
 		5FF802521FC6900D00BD1019 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF802501FC6900D00BD1019 /* Main.storyboard */; };
 		5FF802541FC6900D00BD1019 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FF802531FC6900D00BD1019 /* Assets.xcassets */; };
 		5FF802571FC6900D00BD1019 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FF802551FC6900D00BD1019 /* LaunchScreen.storyboard */; };
+		5FF8025F1FC6B8C900BD1019 /* SelectPhotoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8025E1FC6B8C900BD1019 /* SelectPhotoTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		5FF802531FC6900D00BD1019 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FF802561FC6900D00BD1019 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FF802581FC6900D00BD1019 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FF8025E1FC6B8C900BD1019 /* SelectPhotoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +58,7 @@
 			children = (
 				5FF8024C1FC6900D00BD1019 /* AppDelegate.swift */,
 				5FF8024E1FC6900D00BD1019 /* ZoomInViewController.swift */,
+				5FF8025E1FC6B8C900BD1019 /* SelectPhotoTableViewController.swift */,
 				5FF802501FC6900D00BD1019 /* Main.storyboard */,
 				5FF802531FC6900D00BD1019 /* Assets.xcassets */,
 				5FF802551FC6900D00BD1019 /* LaunchScreen.storyboard */,
@@ -138,6 +141,7 @@
 			files = (
 				5FF8024F1FC6900D00BD1019 /* ZoomInViewController.swift in Sources */,
 				5FF8024D1FC6900D00BD1019 /* AppDelegate.swift in Sources */,
+				5FF8025F1FC6B8C900BD1019 /* SelectPhotoTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

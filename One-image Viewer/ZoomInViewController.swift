@@ -32,6 +32,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
         button.contentHorizontalAlignment = .center
         button.layer.cornerRadius = 2
         
+        button.addTarget(self, action: #selector(goToPickAnImage(sender:)), for: .touchUpInside)
         
         return button
     }()
@@ -39,6 +40,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor(red: 43/255.0, green: 43/255.0, blue: 43/255.0, alpha: 1.0)
         addScrollView()
 
     }
@@ -123,5 +125,11 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
             ])
         
     }
+    
+    @objc func goToPickAnImage(sender: UIButton) {
+        let selectPhotoTableViewController = SelectPhotoTableViewController()
+        self.present(selectPhotoTableViewController, animated:true, completion:nil)
+    }
+    
 }
 
