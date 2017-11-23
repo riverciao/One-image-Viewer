@@ -60,14 +60,9 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
         //當裝置旋轉時，會重新調整大小
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
-        //1.將滾動區域的位置從原點在左上角改為(1000, 450)
-        //        scrollView.contentOffset = CGPoint(x: 1000, y: 450)
-        
-        //2. 縮放功能需要指定delegate self 跟縮放比例
+
+        //縮放功能需要指定delegate self 跟縮放比例
         scrollView.delegate = self
-        //        scrollView.minimumZoomScale = 0.1
-        //        scrollView.maximumZoomScale = 4.0
-        //        scrollView.zoomScale = 1.0
         
         }
         
@@ -127,8 +122,10 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func goToPickAnImage(sender: UIButton) {
-        let selectPhotoTableViewController = SelectPhotoTableViewController()
-        self.present(selectPhotoTableViewController, animated:true, completion:nil)
+
+        if let nextViewController = storyboard?.instantiateViewController(withIdentifier: "SelectPhoto") as? SelectPhotoTableViewController {
+            present(nextViewController, animated: true, completion: nil)
+        }
     }
     
 }

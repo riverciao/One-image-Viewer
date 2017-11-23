@@ -24,5 +24,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
+        <!--Select Photo Table View Controller-->
+        <scene sceneID="3Sl-Sc-Ro7">
+            <objects>
+                <tableViewController storyboardIdentifier="SelectPhoto" useStoryboardIdentifierAsRestorationIdentifier="YES" id="q02-aP-O3b" customClass="SelectPhotoTableViewController" customModule="One_image_Viewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="vXw-zZ-m2s">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="photoCell" id="EA0-wW-MeA" customClass="SelectPhotoTableViewCell" customModule="One_image_Viewer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EA0-wW-MeA" id="pG8-td-9IT">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GTB-Yc-6FY">
+                                            <rect key="frame" x="8" y="8" width="359" height="27.5"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="GTB-Yc-6FY" firstAttribute="leading" secondItem="pG8-td-9IT" secondAttribute="leading" constant="8" id="82N-YV-EdE"/>
+                                        <constraint firstAttribute="trailing" secondItem="GTB-Yc-6FY" secondAttribute="trailing" constant="8" id="cAq-aH-C3T"/>
+                                        <constraint firstAttribute="bottom" secondItem="GTB-Yc-6FY" secondAttribute="bottom" constant="8" id="xiE-6Z-FXe"/>
+                                        <constraint firstItem="GTB-Yc-6FY" firstAttribute="top" secondItem="pG8-td-9IT" secondAttribute="top" constant="8" id="yBH-5l-rcV"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="cellPhotoImageView" destination="GTB-Yc-6FY" id="nfV-Tu-pZK"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="q02-aP-O3b" id="CdN-lB-kdD"/>
+                            <outlet property="delegate" destination="q02-aP-O3b" id="rIQ-jm-YhE"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="selectPhotoCollectionView" destination="vXw-zZ-m2s" id="ema-Ad-l6S"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oeM-Dk-KyC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="862" y="42"/>
+        </scene>
     </scenes>
 </document>
