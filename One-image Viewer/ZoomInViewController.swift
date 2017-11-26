@@ -7,8 +7,9 @@
 //
 
 import UIKit
+//import MobileCoreServices
 
-class ZoomInViewController: UIViewController, UIScrollViewDelegate {
+class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var scrollView: UIScrollView!
     var imageView: UIImageView!
@@ -48,7 +49,9 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
     
     func addScrollView() {
         
-        imageView = UIImageView(image: UIImage(named: "img_lovelyRoadSide"))
+        imageView = UIImageView(image: UIImage(named: "icon_photo"))
+        imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = UIColor.white
         
         //設定滾動區域及大小
         scrollView = UIScrollView(frame: view.bounds)
@@ -59,6 +62,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
         
         //當裝置旋轉時，會重新調整大小
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        scrollView.contentOffset = CGPoint(x: -UIScreen.main.bounds.size.width * 0.5, y: -UIScreen.main.bounds.size.height * 0.5)
         
 
         //縮放功能需要指定delegate self 跟縮放比例
@@ -66,12 +70,12 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
         
         }
         
-        // 2.加了縮放功能 protocol (UIScrollViewDelegate) 需要implement 的function
+        // 加了縮放功能 protocol (UIScrollViewDelegate) 需要implement 的function
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             return imageView
         }
         
-        //3. 為了讓圖片縮小填滿且有Aspect Fit
+        // 為了讓圖片縮小填滿且有Aspect Fit
         fileprivate func updateMinZoomScaleForSize(_ size: CGSize) {
             let widthScale = size.width / imageView.bounds.width
             let heightScale = size.height / imageView.bounds.height
@@ -122,11 +126,28 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc func goToPickAnImage(sender: UIButton) {
-
-        if let nextViewController = storyboard?.instantiateViewController(withIdentifier: "SelectPhoto") as? SelectPhotoTableViewController {
-            present(nextViewController, animated: true, completion: nil)
-        }
+        openGallary()
     }
+    
+    func openGallary() {
+        let image = UIImagePickerController()
+        image.delegate = self
+        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        image.allowsEditing = false
+        self.present(image, animated: true, completion: nil)
+        
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            imageView.image = image
+            scrollView.contentSize = imageView.bounds.size
+            imageView.contentMode = .scaleAspectFit
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
 }
 
