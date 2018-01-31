@@ -16,6 +16,18 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     
     var scrollView: UIScrollView!
     var imageView: UIImageView!
+    var viewingImage: UIImage? = nil {
+        didSet {
+            if let image = viewingImage {
+                imageView.image = image
+                if isLargerThanScrollView(image: image) {
+                    imageView.frame = CGRect(origin: .zero, size: view.bounds.size)
+                } else {
+                    imageView.frame = CGRect(origin: .zero, size: image.size)
+                }
+            }
+        }
+    }
     
     lazy var buttomView: UIView = {
         let view = UIImageView()
@@ -80,10 +92,11 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     
     func addScrollView() {
         
-        let placeHolderImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
-        imageView = UIImageView(image: placeHolderImage)
+//        let placeHolderImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
+//        imageView = UIImageView(image: placeHolderImage)
+        viewingImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
+//        imageView = UIImageView(image: viewingImage)
         imageView.tintColor = UIColor.white
-        imageView.frame = CGRect(origin: .zero, size: view.bounds.size)
         
         //設定滾動區域及大小
         scrollView = UIScrollView(frame: view.bounds)
@@ -148,7 +161,8 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            imageView.image = image
+//            imageView.image = image
+            viewingImage = image
             scrollView.contentSize = imageView.bounds.size
             imageView.contentMode = .scaleAspectFit
 //            updateMinZoomScaleForSize(view.bounds.size)
@@ -157,6 +171,16 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         self.dismiss(animated: true, completion: nil)
     }
     
+    func isLargerThanScrollView(image: UIImage) -> Bool {
+        
+        if image.size.width > imageView.bounds.width ||
+            image.size.height > imageView.bounds.height {
+            return true
+        }
+        
+        return false
+        
+    }
     
 }
 
