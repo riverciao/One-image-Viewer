@@ -14,10 +14,15 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     // MARK: Property
     
     var scrollView: UIScrollView!
-    var imageView: UIImageView!
+    
+    lazy var imageView: UIImageView = {
+        let imageView = UIImageView(image: viewingImage)
+        return imageView
+    }()
+    
     var viewingImage: UIImage? = nil {
         didSet {
-            if let image = viewingImage, let imageView = imageView {
+            if let image = viewingImage {
                 imageView.image = image
                 if isLargerThanScrollView(image: image) {
                     imageView.frame = CGRect(origin: .zero, size: view.bounds.size)
@@ -28,7 +33,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         }
     }
     
-    lazy var buttomView: UIView = {
+    lazy var bottomView: UIView = {
         let view = UIImageView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(red: 249 / 255.0, green: 223 / 255.0, blue: 23 / 255.0, alpha: 1.0)
@@ -65,16 +70,28 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
+        setup()
+        
         //呼叫func讓圖片縮小填滿且有Aspect Fit
         updateMinZoomScaleForSize(view.bounds.size)
         
-        view.addSubview(buttomView)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+    }
+    
+    // MARK: Setup
+    
+    func setup() {
+        view.addSubview(bottomView)
         
         NSLayoutConstraint.activate([
-            buttomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
-            buttomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
-            buttomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-            buttomView.heightAnchor.constraint(equalToConstant: 77.0)
+            bottomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
+            bottomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+            bottomView.heightAnchor.constraint(equalToConstant: 77.0)
             ])
         
         view.addSubview(pickAnImageButton)
@@ -88,12 +105,9 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         
     }
     
-    // MARK: Method
-    
     func addScrollView() {
-
+        
         viewingImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
-        imageView = UIImageView(image: viewingImage)
         imageView.tintColor = UIColor.white
         
         //設定滾動區域及大小
@@ -103,35 +117,35 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         view.addSubview(scrollView)
         scrollView.addSubview(imageView)
         
-        //當裝置旋轉時，會重新調整大小
+        // 當裝置旋轉時，會重新調整大小
         scrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         scrollView.contentOffset = CGPoint(x: -UIScreen.main.bounds.size.width * 0.5, y: -UIScreen.main.bounds.size.height * 0.5)
         
-
-        //縮放功能需要指定delegate self 跟縮放比例
+        
+        // 縮放功能需要指定delegate self 跟縮放比例
         scrollView.delegate = self
         
-        }
-        
-        // 加了縮放功能 protocol (UIScrollViewDelegate) 需要implement 的function
-        func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-            return imageView
-        }
-        
-        // 為了讓圖片縮小填滿且有Aspect Fit
-        fileprivate func updateMinZoomScaleForSize(_ size: CGSize) {
-            let widthScale = size.width / imageView.bounds.width
-            let heightScale = size.height / imageView.bounds.height
-            
-            let minScale = min(widthScale, heightScale)
-            scrollView.minimumZoomScale = minScale
-            
-            scrollView.zoomScale = minScale
-            
-        }
+    }
     
+    // 加了縮放功能 protocol (UIScrollViewDelegate) 需要implement 的function
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
     
-        //4.讓圖片置中, 每次縮放之後會被呼叫
+    // 為了讓圖片縮小填滿且有Aspect Fit
+    func updateMinZoomScaleForSize(_ size: CGSize) {
+        let widthScale = size.width / imageView.bounds.width
+        let heightScale = size.height / imageView.bounds.height
+        
+        let minScale = min(widthScale, heightScale)
+        scrollView.minimumZoomScale = minScale
+        scrollView.zoomScale = minScale
+        
+    }
+    
+    // MARK: Method
+    
+        // 讓圖片置中, 每次縮放之後會被呼叫
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
             let imageViewSize = imageView.frame.size
             let scrollViewSize = scrollView.bounds.size
