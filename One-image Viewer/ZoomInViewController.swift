@@ -11,6 +11,9 @@ import UIKit
 
 class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
+    // MARK: Property
+    
     var scrollView: UIScrollView!
     var imageView: UIImageView!
     
@@ -38,6 +41,8 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         return button
     }()
     
+    // MARK: View life cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,11 +51,37 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
 
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        //呼叫func讓圖片縮小填滿且有Aspect Fit
+        updateMinZoomScaleForSize(view.bounds.size)
+        
+        view.addSubview(buttomView)
+        
+        NSLayoutConstraint.activate([
+            buttomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
+            buttomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
+            buttomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
+            buttomView.heightAnchor.constraint(equalToConstant: 77.0)
+            ])
+        
+        view.addSubview(pickAnImageButton)
+        
+        NSLayoutConstraint.activate([
+            pickAnImageButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 98.0),
+            pickAnImageButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -97.0),
+            pickAnImageButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0),
+            pickAnImageButton.heightAnchor.constraint(equalToConstant: 44.0)
+            ])
+        
+    }
+    
     
     func addScrollView() {
         
-        imageView = UIImageView(image: UIImage(named: "icon_photo"))
-        imageView.image = imageView.image!.withRenderingMode(.alwaysTemplate)
+        let placeHolderImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
+        imageView = UIImageView(image: placeHolderImage)
         imageView.tintColor = UIColor.white
         
         //設定滾動區域及大小
@@ -99,31 +130,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
             scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
         }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-        //呼叫func讓圖片縮小填滿且有Aspect Fit
-        updateMinZoomScaleForSize(view.bounds.size)
-        
-        view.addSubview(buttomView)
-        
-        NSLayoutConstraint.activate([
-            buttomView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0.0),
-            buttomView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0.0),
-            buttomView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0.0),
-            buttomView.heightAnchor.constraint(equalToConstant: 77.0)
-            ])
-        
-        view.addSubview(pickAnImageButton)
-        
-        NSLayoutConstraint.activate([
-            pickAnImageButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 98.0),
-            pickAnImageButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -97.0),
-            pickAnImageButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -16.0),
-            pickAnImageButton.heightAnchor.constraint(equalToConstant: 44.0)
-            ])
-        
-    }
+
     
     @objc func goToPickAnImage(sender: UIButton) {
         openGallary()
