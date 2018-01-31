@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import MobileCoreServices
 
 class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -18,7 +17,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     var imageView: UIImageView!
     var viewingImage: UIImage? = nil {
         didSet {
-            if let image = viewingImage {
+            if let image = viewingImage, let imageView = imageView {
                 imageView.image = image
                 if isLargerThanScrollView(image: image) {
                     imageView.frame = CGRect(origin: .zero, size: view.bounds.size)
@@ -89,13 +88,12 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         
     }
     
+    // MARK: Method
     
     func addScrollView() {
-        
-//        let placeHolderImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
-//        imageView = UIImageView(image: placeHolderImage)
+
         viewingImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
-//        imageView = UIImageView(image: viewingImage)
+        imageView = UIImageView(image: viewingImage)
         imageView.tintColor = UIColor.white
         
         //設定滾動區域及大小
@@ -161,11 +159,9 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-//            imageView.image = image
             viewingImage = image
             scrollView.contentSize = imageView.bounds.size
             imageView.contentMode = .scaleAspectFit
-//            updateMinZoomScaleForSize(view.bounds.size)
         }
         
         self.dismiss(animated: true, completion: nil)
