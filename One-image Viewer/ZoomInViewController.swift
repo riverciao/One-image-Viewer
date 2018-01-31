@@ -83,6 +83,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
         let placeHolderImage = #imageLiteral(resourceName: "icon_photo").withRenderingMode(.alwaysTemplate)
         imageView = UIImageView(image: placeHolderImage)
         imageView.tintColor = UIColor.white
+        imageView.frame = CGRect(origin: .zero, size: view.bounds.size)
         
         //設定滾動區域及大小
         scrollView = UIScrollView(frame: view.bounds)
@@ -150,6 +151,7 @@ class ZoomInViewController: UIViewController, UIScrollViewDelegate, UIImagePicke
             imageView.image = image
             scrollView.contentSize = imageView.bounds.size
             imageView.contentMode = .scaleAspectFit
+//            updateMinZoomScaleForSize(view.bounds.size)
         }
         
         self.dismiss(animated: true, completion: nil)
